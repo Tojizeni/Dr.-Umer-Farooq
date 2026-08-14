@@ -1,0 +1,64 @@
+import { motion } from "framer-motion";
+import { Star, Quote } from "lucide-react";
+
+const reviews = [
+    { name: "Ahmed R.", rating: 5, text: "Very professional consultation and good communication. The doctor listened to my complete history before suggesting anything." },
+    { name: "Sara K.", rating: 5, text: "The personalized care was exactly what I needed. Highly recommend for anyone looking for holistic treatment." },
+    { name: "Bilal M.", rating: 4, text: "Good experience overall. The clinic is clean and the appointment system is very easy to use." },
+];
+
+export default function ReviewsPreview() {
+    return (
+        <section className="py-20 bg-gray-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div className="text-center max-w-2xl mx-auto mb-12">
+                    <span className="text-brand-700 font-semibold text-sm uppercase tracking-wide">Testimonials</span>
+                    <h2 className="mt-2 text-3xl md:text-4xl font-bold text-gray-900">
+                        What Our Patients Say
+                    </h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {reviews.map((review, index) => (
+                        <motion.div
+                            key={review.name}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: index * 0.1 }}
+                            className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative"
+                        >
+                            <Quote className="absolute top-6 right-6 w-10 h-10 text-brand-50" />
+
+                            {/* Stars */}
+                            <div className="flex gap-1 mb-4">
+                                {Array.from({ length: 5 }).map((_, i) => (
+                                    <Star
+                                        key={i}
+                                        className={`w-5 h-5 ${i < review.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200"}`}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Text */}
+                            <p className="text-gray-600 mb-6 relative z-10">"{review.text}"</p>
+
+                            {/* Author */}
+                            <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+                                <div className="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center font-bold text-brand-700">
+                                    {review.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold text-gray-900">{review.name}</h4>
+                                    <p className="text-xs text-gray-500">Verified Patient</p>
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}
+                </div>
+
+            </div>
+        </section>
+    );
+}
