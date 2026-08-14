@@ -18,8 +18,7 @@ dist-ssr
 .env.local
 .env.production
 
-# Convex generated files (Ye local mein generate hote hain)
-convex/_generated/
+
 
 # Editor directories and files
 .vscode/*
