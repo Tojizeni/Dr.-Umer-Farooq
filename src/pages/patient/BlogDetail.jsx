@@ -1,34 +1,39 @@
 import { useParams, Link } from "react-router-dom";
+import { useQuery } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import Seo from "../../components/ui/Seo";
-import { ArrowLeft, Calendar } from "lucide-react";
+import { ArrowLeft, Calendar, Loader2 } from "lucide-react";
 
-const blogData = {
-    "allergy-management": {
-        title: "Homeopathic Approaches to Allergy Management",
-        date: "May 15, 2024",
-        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80",
-        body: "Allergies can be challenging, but homeopathic supportive care offers a holistic approach. In this article, we explore..."
-    },
-    "sleep-habits": {
-        title: "Healthy Sleep Habits for Better Wellbeing",
-        date: "May 10, 2024",
-        image: "https://images.unsplash.com/photo-1520206183501-b80df61043c2?w=800&q=80",
-        body: "Sleep is crucial for health. Here are some tips and natural approaches to improve your sleep cycle..."
-    }
-};
+function PostImage({ storageId }) {
+    const url = useQuery(api.files.getImageUrl, { storageId });
+    if (url === undefined || url === null) return null;
+    return <div className="rounded-2xl overflow-hidden mb-8 h-72 md:h-96"><img src={url} alt="Cover" className="w-full h-full object-cover" /></div>;
+}
 
 export default function BlogDetail() {
     const { slug } = useParams();
-    const post = blogData[slug] || {
-        title: "Article Not Found",
-        date: "",
-        image: "",
-        body: "The article you are looking for does not exist."
-    };
+    const post = useQuery(api.blogPosts.getBySlug, { slug });
+
+    if (post === undefined) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-brand-700" />
+            </div>
+        );
+    }
+
+    if (post === null) {
+        return (
+            <div className="py-16 text-center min-h-screen">
+                <h1 className="text-3xl font-bold text-gray-900">Article Not Found</h1>
+                <Link to="/blog" className="mt-4 inline-block text-brand-700">Back to Blog</Link>
+            </div>
+        );
+    }
 
     return (
         <>
-            <Seo title={`${post.title} | Dr. Homeo Blog`} description={post.body.substring(0, 100)} />
+            <Seo title={`${post.title} | Dr. Homeo Blog`} description={post.excerpt} />
 
             <section className="py-16 bg-white min-h-screen">
                 <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,21 +41,17 @@ export default function BlogDetail() {
                         <ArrowLeft className="w-4 h-4" /> Back to Blog
                     </Link>
 
-                    {post.image && (
-                        <div className="rounded-2xl overflow-hidden mb-8 h-72 md:h-96">
-                            <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-                        </div>
-                    )}
+                    <PostImage storageId={post.coverImageId} />
 
                     <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
                         <Calendar className="w-4 h-4" />
-                        {post.date}
+                        {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
                     </div>
 
                     <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{post.title}</h1>
 
-                    <div className="mt-6 prose prose-lg max-w-none text-gray-700 leading-relaxed">
-                        <p>{post.body}</p>
+                    <div className="mt-6 prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-line">
+                        {post.body}
                     </div>
                 </div>
             </section>
