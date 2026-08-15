@@ -70,8 +70,8 @@ export default function Hero() {
                                 👨‍⚕️
                             </div>
                             <div>
-                                <h3 className="font-bold text-gray-900 text-lg leading-tight">Dr. ___</h3>
-                                <p className="text-sm text-brand-700">10+ Years Experience</p>
+                                <h3 className="font-bold text-gray-900 text-lg leading-tight">Dr. Umer Farooq</h3>
+                                <p className="text-sm text-brand-700">20+ Years Experience</p>
                             </div>
                         </div>
                     </div>
