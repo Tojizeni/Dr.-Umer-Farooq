@@ -1,7 +1,22 @@
+import { useState } from "react";
+import { useMutation } from "convex/react";
+import { api } from "../../../convex/_generated/api";
 import Seo from "../../components/ui/Seo";
-import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageSquare, CheckCircle2 } from "lucide-react";
 
 export default function Contact() {
+    const createMessage = useMutation(api.messages.create);
+    const [submitted, setSubmitted] = useState(false);
+    const [form, setForm] = useState({ name: "", email: "", body: "" });
+
+    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await createMessage(form); // Convex mein message save karega
+        setSubmitted(true);
+    };
+
     return (
         <>
             <Seo title="Contact Us | Dr. Homeo" description="Get in touch with our clinic for appointments and inquiries." />
@@ -66,29 +81,62 @@ export default function Contact() {
                             </div>
                         </div>
 
-                        {/* Contact Form (Saves to Convex later) */}
+                        {/* Contact Form */}
                         <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                            <div className="flex items-center gap-3 mb-6">
-                                <MessageSquare className="w-8 h-8 text-brand-700" />
-                                <h2 className="text-xl font-bold text-gray-900">Send a Message</h2>
-                            </div>
-                            <form className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                                    <input type="text" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent" />
+                            {submitted ? (
+                                <div className="h-full flex flex-col items-center justify-center text-center">
+                                    <CheckCircle2 className="w-16 h-16 text-brand-600 mb-4" />
+                                    <h2 className="text-2xl font-bold text-gray-900">Message Sent!</h2>
+                                    <p className="text-gray-600 mt-2">Thank you for reaching out. We will get back to you shortly.</p>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                    <input type="email" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
-                                    <textarea rows="4" required className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"></textarea>
-                                </div>
-                                <button type="submit" className="w-full bg-brand-700 text-white py-3 rounded-lg font-semibold hover:bg-brand-800 transition-colors">
-                                    Submit
-                                </button>
-                            </form>
+                            ) : (
+                                <>
+                                    <div className="flex items-center gap-3 mb-6">
+                                        <MessageSquare className="w-8 h-8 text-brand-700" />
+                                        <h2 className="text-xl font-bold text-gray-900">Send a Message</h2>
+                                    </div>
+                                    <form onSubmit={handleSubmit} className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                            <input
+                                                name="name"
+                                                value={form.name}
+                                                onChange={handleChange}
+                                                required
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                value={form.email}
+                                                onChange={handleChange}
+                                                required
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                            <textarea
+                                                name="body"
+                                                rows="4"
+                                                value={form.body}
+                                                onChange={handleChange}
+                                                required
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                                            ></textarea>
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className="w-full bg-brand-700 text-white py-3 rounded-lg font-semibold hover:bg-brand-800 transition-colors"
+                                        >
+                                            Submit
+                                        </button>
+                                    </form>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
