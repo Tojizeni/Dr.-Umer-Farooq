@@ -40,7 +40,7 @@ export default function Hero() {
                         </Link>
 
                         <a
-                            href="https://wa.me/921234567890" // Apna WhatsApp number yahan likhein
+                            href="https://wa.me/923349090240" // Apna WhatsApp number yahan likhein
                             target="_blank"
                             rel="noopener noreferrer"
                             className="bg-white border border-brand-700 text-brand-700 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-brand-50 transition-colors"
@@ -60,7 +60,7 @@ export default function Hero() {
                 >
                     <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl bg-white p-3 border border-gray-100">
                         <img
-                            src="/doctor.jpg" // public folder mein doctor.jpg rakhein
+                            src="https://i.pinimg.com/736x/e6/87/a1/e687a1e040c623a383d280abbccb1add.jpg" // public folder mein doctor.jpg rakhein
                             alt="Dr. Homeo - Homeopathic Physician"
                             className="w-full h-[450px] object-cover rounded-2xl"
                         />
