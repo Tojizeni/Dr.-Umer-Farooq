@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Award, Users, GraduationCap, MapPin } from "lucide-react";
 
 const stats = [
-    { icon: Award, value: "10+", label: "Years of Experience", color: "bg-blue-500" },
+    { icon: Award, value: "20+", label: "Years of Experience", color: "bg-blue-500" },
     { icon: Users, value: "5,000+", label: "Patients Treated", color: "bg-green-500" },
     { icon: GraduationCap, value: "BHMS, MD", label: "Certifications", color: "bg-purple-500" },
     { icon: MapPin, value: "Main City", label: "Clinic Location", color: "bg-orange-500" },
