@@ -60,7 +60,7 @@ export default function Hero() {
                 >
                     <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl bg-white p-3 border border-gray-100">
                         <img
-                            src="https://i.ibb.co/LhqTpYLP/Gemini-Generated-Image-6msawk6msawk6msa.jpg" // public folder mein doctor.jpg rakhein
+                            src="https://i.ibb.co/zWhRdYLt/Chat-GPT-Image-Aug-16-2026-12-13-51-PM.png" // public folder mein doctor.jpg rakhein
                             alt="Dr. Homeo - Homeopathic Physician"
                             className="w-full h-[450px] object-cover rounded-2xl"
                         />
