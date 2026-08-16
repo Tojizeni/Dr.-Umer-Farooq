@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
-import { Check, X, CheckCircle2 } from "lucide-react";
+import { Check, X, CheckCircle2, Trash2 } from "lucide-react";
 
 const TABS = ["pending", "confirmed", "completed", "cancelled"];
 
@@ -9,6 +9,7 @@ export default function Appointments() {
     const [tab, setTab] = useState("pending");
     const appointments = useQuery(api.appointments.listByStatus, { status: tab });
     const updateStatus = useMutation(api.appointments.updateStatus);
+    const removeAppointment = useMutation(api.appointments.remove);
 
     return (
         <div>
@@ -58,6 +59,19 @@ export default function Appointments() {
                                     <X className="w-4 h-4" />
                                 </button>
                             )}
+
+                            {/* Permanent Delete Button */}
+                            <button
+                                onClick={() => {
+                                    if (window.confirm("Delete this appointment permanently?")) {
+                                        removeAppointment({ id: a._id });
+                                    }
+                                }}
+                                className="bg-gray-200 text-gray-600 p-2 rounded-lg hover:bg-gray-300"
+                                title="Delete Permanently"
+                            >
+                                <Trash2 className="w-4 h-4" />
+                            </button>
                         </div>
                     </div>
                 ))}

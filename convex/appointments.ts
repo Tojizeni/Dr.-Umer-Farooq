@@ -81,3 +81,11 @@ export const getStats = query({
     };
   },
 });
+
+// Naya function: Appointment permanently delete karne ke liye
+export const remove = mutation({
+  args: { id: v.id("appointments") },
+  handler: async (ctx, { id }) => {
+    await ctx.db.delete(id);
+  },
+});
