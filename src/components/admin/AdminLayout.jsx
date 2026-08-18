@@ -24,9 +24,9 @@ export default function AdminLayout() {
                     <h1 className="text-lg font-bold text-gray-900">Dr. Panel</h1>
                 </div>
 
-                {/* Main Content Area */}
-                <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-x-hidden">
-                    <Outlet /> {/* Yahan Appointments, Patients wagaira render honge */}
+            
+                <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-x-hidden w-full">
+                    <Outlet />
                 </main>
             </div>
         </div>
